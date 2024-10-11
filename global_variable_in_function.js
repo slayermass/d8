@@ -1,12 +1,12 @@
-const fnCorrect = () => {
-  let counter = 0;
+var fnValueAsParam = () => { // 510
+  var counter = 0;
 
-  const fn = (localCounter) => {
+  var fn = (localCounter) => {
     while (localCounter < 9e8) {
       localCounter++;
     }
 
-    counter = localCounter;
+    counter = localCounter; // to update the variable if needed
   }
 
   fn(counter);
@@ -14,10 +14,10 @@ const fnCorrect = () => {
   console.log('counter', counter);
 }
 
-const fnContext = () => {
-  let counter = 0;
+var fnValueFromContext = () => { // 1600
+  var counter = 0;
 
-  const fn = () => {
+  var fn = () => {
     while (counter < 9e8) {
       counter++;
     }
@@ -28,13 +28,14 @@ const fnContext = () => {
   console.log('counter', counter);
 }
 
-%NeverOptimizeFunction(fnContext);
-%NeverOptimizeFunction(fnCorrect);
+%NeverOptimizeFunction(fnValueFromContext);
+%NeverOptimizeFunction(fnValueAsParam);
 
 /** run */
 
 var start = performance.now();
 
-fnContext();
+// fnValueAsParam();
+// fnValueFromContext();
 
 console.log('time: ', performance.now() - start);
